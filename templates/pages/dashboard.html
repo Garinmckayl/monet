@@ -158,6 +158,15 @@
             </div>
           </li>
           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.email }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <li><a href="{% url 'account_change_password' %}">Change PAssword</a></li>
+                <li><a href="{% url 'account_logout' %}">Log Out</a></li>
+            </ul>
+          </li>
+          {% comment %} <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ user.email }}
             </a>
@@ -165,7 +174,7 @@
               <li><a href="{% url 'account_change_password' %}">Change PAssword</a></li>
               <li><a href="{% url 'account_logout' %}">Log Out</a></li>
             </ul>
-          </li>
+          </li> {% endcomment %}
         </ul>
       </div>
     </nav>
