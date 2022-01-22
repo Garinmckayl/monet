@@ -3,7 +3,6 @@
 
 {% block title %}Home page{% endblock title %}
 
-{% block content %}
 
 
 
@@ -183,7 +182,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="#">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
@@ -258,40 +257,19 @@
           </div>
 
 
+
           <div class="row">
 
             <div class="col-lg-4">
-            <div class="card">
-                <h5 class="card-header">Update your Account</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
+
+                {% block content %}
+                <p>Default content...</p>
+              {% endblock content %}
+
+
             </div>
 
-            <div class="col-lg-4">
-              <div class="card">
-                <h5 class="card-header">Update your Company</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div>
 
-            <div class="col-lg-4">
-              <div class="card">
-                <h5 class="card-header">Add DataSource</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div>
 
           </div>
 
@@ -817,4 +795,3 @@
 </html>
 
 
-{% endblock content %}

@@ -1,18 +1,38 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Company
 
 class CustomUserCreationForm(UserCreationForm):
-    firstname = forms.CharField()
-    lastname = forms.CharField()
-    sex = forms.CharField()
+
+    first_name = forms.CharField(max_length=30, label='First Name')
+    last_name = forms.CharField(max_length=30, label='Last Name')
+    country = forms.CharField(max_length=30, label='Country')
+    COUNTRY_CHOICES =(
+    ("1", "United States Of America"),
+    ("2", "United Kingdom"),
+    ("3", "Canada"),
+)
+    country = forms.ChoiceField(choices = COUNTRY_CHOICES)
+ 
+    def save(self, request):
+        user = super(CustomUserCreationForm, self).save(request)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.country = self.cleaned_data['country']
+        user.save()
+        return user
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('email', 'username', 'first_name', 'firstname', 'lastname', 'password2', 'sex')
+        fields = ('first_name', 'last_name', 'email', 'country', 'password1', 'password2')
 
 class CustomUserChangeForm(UserChangeForm):
-    firstname = forms.CharField()
-    lastname = forms.CharField()
+
     class Meta:
         model = CustomUser
-        fields = ('email', 'username', 'firstname', 'first_name', 'lastname')
+        fields = ('first_name', 'last_name', 'email')
+
+class CompanyUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ['name', 'eni', 'address', 'zip']
