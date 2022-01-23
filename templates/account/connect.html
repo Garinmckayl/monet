@@ -1,0 +1,52 @@
+
+{% extends 'dashboard_base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+	
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+          <h5 class="card-header">Connect Data Source</h5>
+          <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Connect</a>
+          </div>
+        </div>
+      </div>
+
+  
+
+
+</div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mx-auto">
+
+            <a href=""><img height="80" width="150" src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"/></a><br/>
+            <a href=""><img height="80" width="150" src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"/></a><br/>
+            <a href=""><img height="80" width="150" src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"/></a><br/>
+            <a href=""><img height="80" width="150" src="https://upload.wikimedia.org/wikipedia/commons/1/17/FreshBooks_logo_%282020%29.svg"/></a><br/>
+            <a href=""><img height="80" width="190" disabled="disabled" src="https://upload.wikimedia.org/wikipedia/commons/2/20/Bank_of_America_logo.svg"/></a><br/>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
