@@ -18,18 +18,18 @@ class Auction(models.Model):
     active = models.BooleanField(null=False, default=False)
 
 
-class Bids(models.Model):
+class Bid(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE, null=False, default='1')
     auction = models.ForeignKey(Auction, on_delete=CASCADE, null=False, default='1')
     bid_price = models.IntegerField(null=False, default='1000')
     bid_time = models.TimeField(null=False, default='00:00:00')
 
-class Comments(models.Model):
+class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE, null=False, default='1')
     auction = models.ForeignKey(Auction, on_delete=CASCADE, null=False, default='1')
     comments = models.CharField(max_length=150, default='abc')
 
-class watchlist(models.Model):
+class Watchlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE,)
     auction = models.ForeignKey(Auction, on_delete=CASCADE)
     active = models.BooleanField(default=False)
