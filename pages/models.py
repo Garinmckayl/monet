@@ -9,6 +9,9 @@ from accounts.models import CustomUser
 class Category(models.Model):
     category = models.CharField(max_length=50, null=False)
 
+    def __str__(self) -> str:
+        return self.category
+
 class Auction(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, default='1')
     title = models.CharField(max_length=50 , null=False, unique=True)
