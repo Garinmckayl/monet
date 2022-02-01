@@ -1,0 +1,12 @@
+
+
+{% extends "_base.html" %}
+
+{% block content %}
+    <h2>Auctions</h2>
+    <ul>
+        {% for auction in object_list %}
+            <li>{{ auction.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

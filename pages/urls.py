@@ -2,7 +2,7 @@ from django.urls import path
 from accounts import views as account_views
 
 
-from .views import HomePageView, AboutPageView, DashboardPageView
+from .views import AuctionView, HomePageView, AboutPageView, DashboardPageView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('dashboard/', DashboardPageView.as_view(), name='dashboard'),
     path('dashboard/company/', account_views.company, name="company"),
     path('dashboard/connect/', account_views.connect, name="connect"),
+    path('auctions', AuctionView.as_view(), name='auctions'),
     
 ]
