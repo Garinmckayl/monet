@@ -1,11 +1,13 @@
 
 
 from re import template
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from accounts.models import CustomUser
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+from pages.forms import AuctionForm
 
 from pages.models import Auction
 
@@ -30,24 +32,12 @@ class DashboardPageView(TemplateView):
 from django.views.generic import ListView
 from pages.models import Auction
 
-class AuctionView(View):
+class AuctionListView(View):
 
-    # def get()
-    # model = Auction
-    # template_name = "pages/auction_list.html"
-
-    # form_class = MyForm
-    # initial = {'key': 'value'}
-    # template_name = 'form_template.html'
+    form_class = AuctionForm
 
     def get(self, request, *args, **kwargs):
         object_list = Auction.objects.all()
         return render(request, "pages/auction_list.html", {'object_list': object_list})
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         # <process form cleaned data>
-    #         return HttpResponseRedirect('/success/')
-
-    #     return render(request, self.template_name, {'form': form})
+   
