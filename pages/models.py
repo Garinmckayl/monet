@@ -1,5 +1,6 @@
 from multiprocessing.spawn import import_main_path
 from operator import mod
+from pyexpat import model
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -37,3 +38,9 @@ class Watchlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE,)
     auction = models.ForeignKey(Auction, on_delete=CASCADE)
     active = models.BooleanField(default=False)
+
+
+class DataSource(models.Model):
+
+    company= models.OneToOneField(Company, on_delete=CASCADE)
+    url= models.URLField()
