@@ -1,17 +1,15 @@
 
-
-from re import template
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.views import View
+import stripe
 from accounts.models import CustomUser
 from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views import View
 from django.views.generic import TemplateView
-from pages.forms import AuctionForm
+from django.views.generic.edit import CreateView
 
 from pages.models import Auction
-from django.views.generic.edit import CreateView
 
 
 class HomePageView(TemplateView):
@@ -32,11 +30,13 @@ class DashboardPageView(TemplateView):
 
 
 from django.views.generic import ListView
+
 from pages.models import Auction
+
 
 class AuctionListView(View):
 
-    form_class = AuctionForm
+
 
     def get(self, request, *args, **kwargs):
         object_list = Auction.objects.all()
@@ -67,3 +67,19 @@ class AuctionCreateView(CreateView):
 def auction_create_success(request):
 
     return render(request, "pages/auction_create_success.html")
+
+
+class StripeConnectionView(View):
+
+
+    stripe.api_key = "sk_test_MkXB2zK4pVQk9vMHSCR4hrh100c70XITTM"
+    stripe.client_id = "ca_L3q4MuEPR0JHtn2AlFe5bbf8TqrZDAcq"
+
+    def get(self, request, *args, **kwargs):
+
+        url = stripe.OAuth.authorize_url(scope='read_write')
+
+        print("this is the url ........................", url)
+
+        # return render(request, "pages/stripe-connection.html")
+        return redirect(url)
