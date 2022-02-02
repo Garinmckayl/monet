@@ -45,12 +45,13 @@ def connect(request):
             return redirect('company')
 
     else:
-        u_form = CustomUserChangeForm(instance=request.user)
-        p_form = CompanyUpdateForm(instance=request.user.company)
+        pass
+    #     u_form = CustomUserChangeForm(instance=request.user)
+    #     p_form = CompanyUpdateForm(instance=request.user.company)
 
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
+    # context = {
+    #     'u_form': u_form,
+    #     'p_form': p_form
+    # }
 
-    return render(request, 'account/connect.html', context)
+    return render(request, 'account/connect.html')
