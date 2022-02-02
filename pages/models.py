@@ -1,9 +1,10 @@
 from multiprocessing.spawn import import_main_path
+from operator import mod
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import CASCADE
-from accounts.models import CustomUser
+from accounts.models import Company, CustomUser
 
 
 class Category(models.Model):
@@ -14,7 +15,7 @@ class Category(models.Model):
 
 class Auction(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, default='1')
-    title = models.CharField(max_length=50 , null=False, unique=True)
+    title = models.OneToOneField(Company, on_delete=CASCADE)
     description = models.CharField(max_length=100, null=False, default='ABC')
     starting_price = models.IntegerField(null=False , default='123')
     category = models.ForeignKey(Category, on_delete=CASCADE, null=False, default='1')
