@@ -1,15 +1,16 @@
 
+from urllib import response
+import requests
 import stripe
-from accounts.models import CustomUser
+from accounts.models import Company, CustomUser
 from django.contrib.auth.decorators import login_required
-
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 
-from pages.models import Auction
+from pages.models import Auction, DataSource
 
 
 class HomePageView(TemplateView):
@@ -59,7 +60,7 @@ class AuctionCreateView(CreateView):
     #         form.save()
     #         return HttpResponseRedirect('/success/')
 
-    
+
     # def get(self, request, *arg, **kwargs):
     #     form = self.form_class(request.POST)
     #     return render(request, self.template_name)
@@ -77,9 +78,32 @@ class StripeConnectionView(View):
 
     def get(self, request, *args, **kwargs):
 
-        url = stripe.OAuth.authorize_url(scope='read_write')
+        # get the company of the user 
+        company, created= Company.objects.get_or_create(user=request.user)
+        
+        # at this time, the Company should be created at Codat
+        baseUrl = "https://api-uat.codat.io";
+        authHeaderValue = "Basic bDRlbDRiWDhwdGdhbzVYR1c2d2dxV0s2NHpEa3NOYTlIQk9wOVFEZQ==";
+        # Add your authorization header
+        headers = {"Authorization":authHeaderValue}
+        # TODO first create the company
+        data = {"name": "Recipe test company"}
 
-        print("this is the url ........................", url)
+        response= requests.post('https://api.codat.io/companies', json=data, headers=headers)  
+        data = response.json()
+        data_source,created = DataSource.objects.get_or_create(company=company)
+        data_source.codat_id= data['id']
+        data_source.save()
+
+        redirect_url = data['redirect']
+       
+
+        # url = stripe.OAuth.authorize_url(scope='read_write')
+        # company=Company.objects.first()
+
+        # data, created= DataSource.objects.update_or_create(company=company, url=url)
+
+        # print("this is the url ........................", url)
 
         # return render(request, "pages/stripe-connection.html")
-        return redirect(url)
+        return redirect(redirect_url)
