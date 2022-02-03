@@ -4,7 +4,7 @@ from accounts import views as account_views
 from django.urls import path, reverse
 
 from .views import (AboutPageView, AuctionCreateView, AuctionListView,
-                    DashboardPageView, HomePageView, StripeConnectionView,
+                    DashboardPageView, DatasourceView, HomePageView, StripeConnectionView,
                     auction_create_success)
 
 urlpatterns = [
@@ -17,5 +17,6 @@ urlpatterns = [
     path('auctions/create/',AuctionCreateView.as_view(), name= 'auction-create'),
     path('auctions/create/success/', auction_create_success, name='auction_create_success'),
     path('stripe-connection/', StripeConnectionView.as_view(), name='stripe-connection'),
+    path('data-source',DatasourceView.as_view(), name='data-source'),
     
 ]
