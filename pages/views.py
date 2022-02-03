@@ -134,6 +134,8 @@ class DatasourceView(View):
         print('data, ........', data)
         print('hey .................',data['dataConnections'][0]['status']=='Linked')
         if data['dataConnections'][0]['status']=='Linked':
+
+            data_source.codac_id=data['id']
             data_source.platform=data['platform']
             data_source.redirect=data['redirect']
             data_source.last_sync = data['lastSync']
