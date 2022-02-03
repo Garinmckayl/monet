@@ -1,7 +1,5 @@
 
-from urllib import response
 import requests
-import stripe
 from accounts.models import Company, CustomUser
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -73,8 +71,8 @@ def auction_create_success(request):
 class StripeConnectionView(View):
 
 
-    stripe.api_key = "sk_test_MkXB2zK4pVQk9vMHSCR4hrh100c70XITTM"
-    stripe.client_id = "ca_L3q4MuEPR0JHtn2AlFe5bbf8TqrZDAcq"
+    # stripe.api_key = "sk_test_MkXB2zK4pVQk9vMHSCR4hrh100c70XITTM"
+    # stripe.client_id = "ca_L3q4MuEPR0JHtn2AlFe5bbf8TqrZDAcq"
 
     def get(self, request, *args, **kwargs):
 
@@ -107,3 +105,43 @@ class StripeConnectionView(View):
 
         # return render(request, "pages/stripe-connection.html")
         return redirect(redirect_url)
+
+
+class DatasourceView(View):
+
+
+    def get(self, request, *args, **kwargs):
+
+        # get the company of the user 
+        company, created= Company.objects.get_or_create(user=request.user)
+        
+        # at this time, the Company should be created at Codat
+        baseUrl = "https://api-uat.codat.io";
+        authHeaderValue = "Basic bDRlbDRiWDhwdGdhbzVYR1c2d2dxV0s2NHpEa3NOYTlIQk9wOVFEZQ==";
+        # Add your authorization header
+        headers = {"Authorization":authHeaderValue}
+       
+
+        data_source,created = DataSource.objects.get_or_create(company=company)
+
+        codat_id = data_source.codat_id
+
+        print('codat id ....................', codat_id)
+
+        response= requests.get('https://api.codat.io/companies/'+codat_id, headers=headers)  
+        data = response.json()
+        
+        print('data, ........', data)
+        print('hey .................',data['dataConnections'][0]['status']=='Linked')
+        if data['dataConnections'][0]['status']=='Linked':
+            data_source.platform=data['platform']
+            data_source.redirect=data['redirect']
+            data_source.last_sync = data['lastSync']
+            data_source.status= data['dataConnections'][0]['status']
+        
+            data_source.save()
+            return render(request,'pages/data-source.html', {'data_source':data_source})
+
+        else:
+            
+            return redirect(data['redirect'])
