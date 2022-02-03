@@ -3,10 +3,6 @@
 
 {% block title %}Home page{% endblock title %}
 
-{% block content %}
-
-
-
 <!doctype html>
 <html lang="en">
 
@@ -24,13 +20,13 @@
   
     <!-- Template Main CSS File -->
     
-    {% endblock %}
+    {% endblock css %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="../js/chart-js-config.js"></script>
     <title>Monet Banking - Admin</title>
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <a class="navbar-brand" href="{% url 'home' %}">Monet Banking</a>
@@ -55,6 +51,12 @@
             <a class="nav-link" href="{% url 'company' %}">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Company</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+            <a class="nav-link" href="{% url 'auctions' %}">
+              <i class="fa fa-fw fa-table"></i>
+              <span class="nav-link-text">Auctions</span>
             </a>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
@@ -178,8 +180,9 @@
         </ul>
       </div>
     </nav>
-    <div class="content-wrapper">
+    {% block content %}
       <div class="container-fluid">
+        
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
@@ -256,49 +259,43 @@
         </div>
 
           </div>
+      <div class="row">
 
-
-          <div class="row">
-
-            <div class="col-lg-4">
-            <div class="card">
-                <h5 class="card-header">Update your Account</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
+        <div class="col-lg-4">
+        <div class="card">
+            <h5 class="card-header">Update your Account</h5>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
-
-            <div class="col-lg-4">
-              <div class="card">
-                <h5 class="card-header">Update your Company</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="{% url 'company' %}" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="card">
-                <h5 class="card-header">Add DataSource</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="{% url 'connect' %}" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-            </div>
-
           </div>
+        </div>
 
+        <div class="col-lg-4">
+          <div class="card">
+            <h5 class="card-header">Update your Company</h5>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="{% url 'company' %}" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
 
+        <div class="col-lg-4">
+          <div class="card">
+            <h5 class="card-header">Add DataSource</h5>
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="{% url 'connect' %}" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
         </div>
 
       </div>
+    {% endblock content %}
       <!-- /.container-fluid-->
       <!-- /.content-wrapper-->
       <footer class="sticky-footer">
@@ -330,7 +327,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> 
+
+
   </body>
 <style>
     html {
@@ -817,4 +816,4 @@
 </html>
 
 
-{% endblock content %}
+
