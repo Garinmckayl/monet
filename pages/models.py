@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import CASCADE
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils import timezone
 from accounts.models import Company, CustomUser
 
@@ -20,14 +21,15 @@ class Category(models.Model):
 
 class Auction(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, default='1')
-    title = models.OneToOneField(Company, on_delete=CASCADE)
-    description = models.CharField(max_length=100, null=False, default='ABC')
+    company = models.OneToOneField(Company, on_delete=CASCADE)
+    description = models.CharField(max_length=100, null=False, default='description')
     starting_price = models.IntegerField(null=False , default='123')
     category = models.ForeignKey(Category, on_delete=CASCADE, null=False, default='1')
     active = models.BooleanField(null=False, default=False)
     created_at = models.DateTimeField(default=timezone.now)
 
-
+    def get_absolute_url(self):
+        return reverse('auction-detail', kwargs={'pk':self.pk})
 class Bid(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE, null=False, default='1')
     auction = models.ForeignKey(Auction, on_delete=CASCADE, null=False, default='1')

@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
+from django.views.generic import DetailView
 
 from pages.models import Auction, DataSource
 
@@ -44,11 +45,10 @@ class AuctionListView(View):
 class AuctionCreateView(CreateView):
 
     model = Auction
-    fields = ['title', 'description', 'starting_price', 'category', 'active']
+    fields = ['company', 'description', 'starting_price', 'category', 'active']
 
-    def get_success_url(self):
-        return reverse('auction_create_success')
-
+    def get_absolute_url(self):
+        return reverse('auction-detail', kwargs={'pk':self.pk})
     # form_class = AuctionForm
 
     # def post(self, request, *args, **kwargs):
@@ -66,6 +66,10 @@ class AuctionCreateView(CreateView):
 def auction_create_success(request):
 
     return render(request, "pages/auction_create_success.html")
+
+class AuctionDetailView(DetailView):
+    context_object_name = 'auction'
+    queryset = Auction.objects.all()
 
 
 class StripeConnectionView(View):
@@ -130,10 +134,12 @@ class DatasourceView(View):
 
         response= requests.get('https://api.codat.io/companies/'+codat_id, headers=headers)  
         data = response.json()
-        
+         
         print('data, ........', data)
         print('hey .................',data['dataConnections'][0]['status']=='Linked')
         if data['dataConnections'][0]['status']=='Linked':
+
+            data_source.codac_id=data['id']
             data_source.platform=data['platform']
             data_source.redirect=data['redirect']
             data_source.last_sync = data['lastSync']

@@ -3,18 +3,22 @@
 <div class="container" style="margin-left: 300px;"">
   <h2>Data about your company</h2>
   <table class="table">
-    <!-- <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Starting Price</th>
-      <th>Category</th>
-      <th>Active</th>
-    </tr> -->
+    <tr>
+      <th>Company</th>
+      <th>Platform</th>
+      <th>Status</th>
+      <th>Last Synced</th>
+      <th>Redirect url</th>
+    </tr>
 
   
     <tr>
+      <td>{{data_source.company}}</td>
+      <td>{{ data_source.platform }}</td>
       <td>{{ data_source.status }}</td>
       <td>{{data_source.last_sync}}</td>
+      <td>{{data_source.redirect}}</td>
+
     
     </tr>
     
