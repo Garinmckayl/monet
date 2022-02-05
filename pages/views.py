@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic import DetailView
 
-from pages.models import Auction, DataSource
+from pages.models import Auction, Bid, DataSource
 
 
 class HomePageView(TemplateView):
@@ -151,3 +151,16 @@ class DatasourceView(View):
         else:
             
             return redirect(data['redirect'])
+
+class BidCreateView(CreateView):
+
+    model = Bid
+    fields = ['user', 'auction', 'bid_price']
+
+    def get_absolute_url(self):
+        return reverse('bid-detail', kwargs={'pk':self.pk})
+
+
+class BidDetailView(DetailView):
+    context_object_name = 'bid'
+    queryset = Bid.objects.all()

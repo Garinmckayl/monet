@@ -30,12 +30,17 @@ class Auction(models.Model):
 
     def get_absolute_url(self):
         return reverse('auction-detail', kwargs={'pk':self.pk})
+
+    def __str__(self) -> str:
+        return str(self.company)
 class Bid(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE, null=False, default='1')
     auction = models.ForeignKey(Auction, on_delete=CASCADE, null=False, default='1')
     bid_price = models.IntegerField(null=False, default='1000')
     bid_time = models.TimeField(null=False, default=timezone.now)
 
+    def get_absolute_url(self):
+        return reverse('bid-detail', kwargs={'pk':self.pk})
 
 
 class Watchlist(models.Model):

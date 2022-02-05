@@ -34,6 +34,12 @@
       <div class="col"><h5>Auction is active: </h5></div>
       <div class="col">{{auction.active}}</div>
     </div>
+
+    <div class="container">
+      <a href="{% url 'bid-create' %}">
+        <button>Bid</button>
+      </a>
+    </div>
   </div>
 
 {% endblock content%}
