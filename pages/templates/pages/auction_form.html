@@ -6,8 +6,9 @@
 
 <div class="container" style="margin-left: 300px;"">
     <div class="content-section">
-        <form method="POST">
+        <form class="form-horizontal" method="POST">
             {% csrf_token %}
+           <div class="form-group">
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Create your Auction</legend>
                 {{ form|crispy }}
@@ -15,6 +16,7 @@
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Submit</button>
             </div>
+           </div>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">

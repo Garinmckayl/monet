@@ -1,0 +1,39 @@
+
+
+{% extends "pages/dashboard.html" %} {% block content %}
+<div class="container" style="margin-left: 300px;"">
+<!-- This is the Name of the comapny row -->
+    <div class="row">
+        <div class="col"><h5>company Name: </h5></div>
+        <div class="col">{{auction.company}}</div>
+    </div>
+    <!-- this is the description row -->
+    <div class="row">
+      <div class="col"><h5>Auctin Description: </h5></div>
+      <div class="col">{{auction.description}}</div>
+    </div>
+
+     <!-- this is the starting_price row -->
+     <div class="row">
+      <div class="col"><h5>Bid Starting Price: </h5></div>
+      <div class="col">{{auction.starting_price}}</div>
+    </div>
+
+     <!-- this is the category row -->
+     <div class="row">
+      <div class="col"><h5>Auctin Category: </h5></div>
+      <div class="col">{{auction.category}}</div>
+    </div>
+    <!-- this is the created_at row -->
+    <div class="row">
+     <div class="col"><h5>Auctin was created at : </h5></div>
+     <div class="col">{{auction.created_at}}</div>
+   </div>
+     <!-- this is the active row -->
+     <div class="row">
+      <div class="col"><h5>Auction is active: </h5></div>
+      <div class="col">{{auction.active}}</div>
+    </div>
+  </div>
+
+{% endblock content%}
