@@ -3,7 +3,7 @@
   <h2>Auctions</h2>
   <table class="table">
     <tr>
-      <th>Title</th>
+      <th>Company name</th>
       <th>Description</th>
       <th>Starting Price</th>
       <th>Category</th>
@@ -12,7 +12,7 @@
 
     {% for auction in object_list %}
     <tr>
-      <td>{{ auction.title.name }}</td>
+      <td>{{ auction.company.name }}</td>
       <td>{{auction.description}}</td>
       <td>{{auction.starting_price}}</td>
       <td>{{auction.category}}</td>
