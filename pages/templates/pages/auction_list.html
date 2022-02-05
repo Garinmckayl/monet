@@ -17,6 +17,10 @@
       <td>{{auction.starting_price}}</td>
       <td>{{auction.category}}</td>
       <td>{{auction.active}}</td>
+      <td>
+        <a href="{% url 'auction-detail' pk=auction.id %}"><button >Detail</button></a>
+      </td>
+
     </tr>
     {% endfor %}
   </table>
