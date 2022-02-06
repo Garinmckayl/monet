@@ -6,6 +6,8 @@
 <!doctype html>
 <html lang="en">
 
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -48,7 +50,7 @@
             </a>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-            <a class="nav-link" href="{% url 'company' %}">
+            <a class="nav-link" href="{% url 'company' pk=company.id %}">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Company</span>
             </a>
@@ -272,16 +274,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4">
-          <div class="card">
-            <h5 class="card-header">Update your Company</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="{% url 'company' %}" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
+      
 
         <div class="col-lg-4">
           <div class="card">
