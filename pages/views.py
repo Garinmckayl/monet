@@ -6,7 +6,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
+from accounts.views import company
 
 from pages.models import Auction, Bid, DataSource
 
@@ -42,26 +43,36 @@ class AuctionListView(ListView):
         
         return context
 
+class MyAuctionDetailView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        my_auction=Auction.objects.filter(user=request.user).first()
+        if my_auction:
+            return render(request, 'pages/my-auction-detail.html',{"my_auction":my_auction})
+        
+        else:
+            return redirect('auction-create')
 
 class AuctionCreateView(CreateView):
 
     model = Auction
-    fields = ['company', 'description', 'starting_price', 'category', 'active']
-
-    def get_context_data(self,*args, **kwargs):
-        
-        context = super(AuctionCreateView, self).get_context_data(*args,**kwargs)
-       
-
-        company=Company.objects.get(user=self.request.user)
-        context['company'] = company
-        
-        return context
+    fields = ['description', 'starting_price', 'category', 'active']
 
 
-def auction_create_success(request):
+    def form_valid(self, form):
+        company= Company.objects.get(user=self.request.user)
+        form.instance.user = self.request.user
+        form.instance.company=company
+        return super().form_valid(form)
 
-    return render(request, "pages/auction_create_success.html")
+class AuctionUpdateView(UpdateView):
+    model = Auction
+    fields = ['description', 'starting_price', 'category', 'active']
+    template_name_suffix = '_update_form'
+   
+
+
 
 class AuctionDetailView(DetailView):
     context_object_name = 'auction'

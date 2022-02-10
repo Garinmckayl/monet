@@ -53,17 +53,7 @@ class CompanyUpdateView(UpdateView):
     model = Company
     fields = ['name', 'eni', 'address','zip']
     template_name_suffix = '_update_form'
-    def get_context_data(self,*args, **kwargs):
-        context = super(CompanyUpdateView, self).get_context_data(*args,**kwargs)
-        p_form = CompanyUpdateForm(self.request.POST,
-                                   self.request.FILES,
-                                   instance=self.request.user.company)
-        context['p_form']=p_form
-        
-        company=Company.objects.get(user=self.request.user)
-        context['company'] = company
-        
-        return context
+   
 
 class CompanyCreateView(CreateView):
     model = Company
