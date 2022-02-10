@@ -1,0 +1,41 @@
+
+
+
+
+{% extends "pages/dashboard.html" %}
+{% load crispy_forms_tags %}
+{% block content %} 
+
+
+<div class="container" style="margin-left: 300px;"">
+<h2>My company Details</h2>
+
+<div class="row">
+    <div class="col">Name</div>
+    <div class="col">{{my_company.name}}</div>
+</div>
+<div class="row">
+    <div class="col">ENI</div>
+    <div class="col">{{my_company.eni}}</div>
+</div>
+<div class="row">
+    <div class="col">Address</div>
+    <div class="col">{{my_company.address}}</div>
+</div>
+<div class="row">
+    <div class="col">zip</div>
+    <div class="col">{{my_company.zip}}</div>
+</div>
+<div class="row">
+    <div class="col">Entity Type</div>
+    <div class="col">{{my_company.entity_type}}</div>
+</div>
+
+<a class="nav-link" href="{% url 'company-update' pk=my_company.id %}">
+    <i class="fa fa-fw fa-table"></i>
+    <span class="nav-link-text">Edit</span>
+  </a>
+
+</div>
+
+{% endblock content%}
