@@ -2,6 +2,7 @@
 
 {% extends "pages/dashboard.html" %} {% block content %}
 <div class="container" style="margin-left: 300px;"">
+  <h4 class="text-primary">This is Auction Details </h4>
 <!-- This is the Name of the comapny row -->
     <div class="row">
         <div class="col"><h5>company Name: </h5></div>
@@ -33,6 +34,36 @@
      <div class="row">
       <div class="col"><h5>Auction is active: </h5></div>
       <div class="col">{{auction.active}}</div>
+    </div>
+
+    <div class="container">
+      <a href="{% url 'bid-create' %}">
+        <button>Bid</button>
+      </a>
+    </div>
+
+    <div class="container">
+
+      <p></p>
+      <h2 class="text-success">Bids for this auction</h2>
+  <table class="table">
+    <tr>
+      <th>Bidder name</th>
+      <th>Bid Price</th>
+      
+    </tr>
+
+      {% for bid in auction.bid_set.all %}
+    <tr>
+      <td>{{ bid.user }}</td>
+      <td>{{ bid.bid_price }}</td>   
+      <td>
+        <a href="{% url 'bid-detail' pk=bid.id %}"><button >Detail</button></a>
+      </td>
+
+    </tr>
+    {% endfor %}
+ </table>
     </div>
   </div>
 

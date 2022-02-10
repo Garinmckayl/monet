@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from config import settings
 
 class CustomUser(AbstractUser):
@@ -30,7 +31,8 @@ class Company(models.Model):
     def __str__(self):
         return self.user.first_name + 'company'
 
-
+    def get_absolute_url(self):
+        return reverse('company', kwargs={'pk':self.pk})
 
 
     def save(self, *args, **kwargs):

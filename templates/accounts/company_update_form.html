@@ -1,0 +1,19 @@
+
+
+{% extends "pages/dashboard.html" %}
+{% load crispy_forms_tags %}
+{% block content %} 
+
+
+<div class="container" style="margin-left: 300px;"">
+<h2>Update your auction here</h2>
+
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Update">
+</form>
+</div>
+
+
+
+{% endblock content%}

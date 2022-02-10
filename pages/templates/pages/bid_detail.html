@@ -1,0 +1,36 @@
+
+
+{% extends "pages/dashboard.html" %} {% block content %}
+<div class="container" style="margin-left: 300px;"">
+<!-- Auction owner row-->
+    <div class="row">
+        <div class="col"><h5>Auction Owner: </h5></div>
+        <div class="col">{{bid.user }}</div>
+    </div>
+    <!-- this is the Auction row -->
+    <div class="row">
+      <div class="col"><h5>This Bid's auction: </h5></div>
+      <div class="col">{{bid.auction}}</div>
+    </div>
+
+     <!-- Bid price row -->
+     <div class="row">
+      <div class="col"><h5>Bid Price: </h5></div>
+      <div class="col">{{bid.bid_price}}</div>
+    </div>
+
+     
+    <!-- this is the created_at row -->
+    <div class="row">
+     <div class="col"><h5>Bid was created at : </h5></div>
+     <div class="col">{{bid.bid_time}}</div>
+   </div>
+   
+    <!-- <div class="container">
+      <a href="{% url 'bid-create' %}">
+        <button>Bid</button>
+      </a>
+    </div> -->
+  </div>
+
+{% endblock content%}

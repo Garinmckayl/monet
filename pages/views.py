@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic import DetailView
 
-from pages.models import Auction, DataSource
+from pages.models import Auction, Bid, DataSource
 
 
 class HomePageView(TemplateView):
@@ -27,6 +27,13 @@ class AboutPageView(TemplateView):
 # @login_required
 class DashboardPageView(TemplateView):
     template_name = 'pages/dashboard.html'
+    def get_context_data(self,*args, **kwargs):
+        context = super(DashboardPageView, self).get_context_data(*args,**kwargs)
+
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
 
 
 from django.views.generic import ListView
@@ -34,13 +41,20 @@ from django.views.generic import ListView
 from pages.models import Auction
 
 
-class AuctionListView(View):
+class AuctionListView(ListView):
+    model=Auction
 
 
+    # def get(self, request, *args, **kwargs):
+    #     object_list = Auction.objects.all()
+    #     return render(request, "pages/auction_list.html", {'object_list': object_list})
+    def get_context_data(self,*args, **kwargs):
+        context = super(AuctionListView, self).get_context_data(*args,**kwargs)
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
 
-    def get(self, request, *args, **kwargs):
-        object_list = Auction.objects.all()
-        return render(request, "pages/auction_list.html", {'object_list': object_list})
 
 class AuctionCreateView(CreateView):
 
@@ -70,6 +84,14 @@ def auction_create_success(request):
 class AuctionDetailView(DetailView):
     context_object_name = 'auction'
     queryset = Auction.objects.all()
+    def get_context_data(self,*args, **kwargs):
+        context = super(AuctionDetailView, self).get_context_data(*args,**kwargs)
+       
+
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
 
 
 class StripeConnectionView(View):
@@ -151,3 +173,16 @@ class DatasourceView(View):
         else:
             
             return redirect(data['redirect'])
+
+class BidCreateView(CreateView):
+
+    model = Bid
+    fields = ['user', 'auction', 'bid_price']
+
+    def get_absolute_url(self):
+        return reverse('bid-detail', kwargs={'pk':self.pk})
+
+
+class BidDetailView(DetailView):
+    context_object_name = 'bid'
+    queryset = Bid.objects.all()
