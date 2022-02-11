@@ -11,5 +11,9 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ['email', 'username', 'first_name']
 
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Company._meta.fields]
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Company)
+admin.site.register(Company, CompanyAdmin)

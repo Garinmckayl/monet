@@ -32,7 +32,7 @@ class Company(models.Model):
         return self.user.first_name + 'company'
 
     def get_absolute_url(self):
-        return reverse('company', kwargs={'pk':self.pk})
+        return reverse('my-company')
 
 
     def save(self, *args, **kwargs):

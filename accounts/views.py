@@ -1,7 +1,9 @@
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.views.generic.edit import UpdateView
+from django.views import View
+from django.views.generic.edit import UpdateView, CreateView
 
 from accounts.models import Company
 
@@ -34,23 +36,33 @@ def company(request):
 
     return render(request, 'account/company.html', context)
 
+class MyCompanyDetailView(View):
+ 
+    def get(self, request, *args, **kwargs):
+    
+        my_company=Company.objects.filter(user=request.user).first()
+        if my_company:
+            return render(request, 'accounts/my-company.html',{"my_company": my_company})
+        
+        else:
+            return redirect('company-create')
+
+
+
 class CompanyUpdateView(UpdateView):
     model = Company
-    fields = ['name', 'user','eni']
+    fields = ['name', 'eni', 'address','zip']
     template_name_suffix = '_update_form'
-    def get_context_data(self,*args, **kwargs):
-        context = super(CompanyUpdateView, self).get_context_data(*args,**kwargs)
-        p_form = CompanyUpdateForm(self.request.POST,
-                                   self.request.FILES,
-                                   instance=self.request.user.company)
-        context['p_form']=p_form
-        
-        company=Company.objects.get(user=self.request.user)
-        context['company'] = company
-        
-        return context
+   
 
+class CompanyCreateView(CreateView):
+    model = Company
+    fields = ['name', 'eni', 'address', 'zip', 'entity_type']
 
+    def form_valid(self, form):
+        
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 @login_required
 def connect(request):

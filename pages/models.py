@@ -29,10 +29,12 @@ class Auction(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def get_absolute_url(self):
-        return reverse('auction-detail', kwargs={'pk':self.pk})
+        return reverse('my-auction')
 
     def __str__(self) -> str:
         return str(self.company)
+    
+
 class Bid(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=CASCADE, null=False, default='1')
     auction = models.ForeignKey(Auction, on_delete=CASCADE, null=False, default='1')

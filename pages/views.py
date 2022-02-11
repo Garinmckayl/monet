@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView
+from accounts.views import company
 
 from pages.models import Auction, Bid, DataSource
 
@@ -19,8 +19,6 @@ class HomePageView(TemplateView):
         context = super(HomePageView, self).get_context_data(*args,**kwargs)
         context['users'] = CustomUser.objects.all()
         return context
-
-
 
 class AboutPageView(TemplateView):
     template_name = 'pages/about.html'
@@ -35,19 +33,9 @@ class DashboardPageView(TemplateView):
         
         return context
 
-
-from django.views.generic import ListView
-
-from pages.models import Auction
-
-
 class AuctionListView(ListView):
     model=Auction
-
-
-    # def get(self, request, *args, **kwargs):
-    #     object_list = Auction.objects.all()
-    #     return render(request, "pages/auction_list.html", {'object_list': object_list})
+    
     def get_context_data(self,*args, **kwargs):
         context = super(AuctionListView, self).get_context_data(*args,**kwargs)
         company=Company.objects.get(user=self.request.user)
@@ -55,31 +43,36 @@ class AuctionListView(ListView):
         
         return context
 
+class MyAuctionDetailView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        my_auction=Auction.objects.filter(user=request.user).first()
+        if my_auction:
+            return render(request, 'pages/my-auction-detail.html',{"my_auction":my_auction})
+        
+        else:
+            return redirect('auction-create')
 
 class AuctionCreateView(CreateView):
 
     model = Auction
-    fields = ['company', 'description', 'starting_price', 'category', 'active']
-
-    def get_absolute_url(self):
-        return reverse('auction-detail', kwargs={'pk':self.pk})
-    # form_class = AuctionForm
-
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         # <process form cleaned data>
-    #         form.save()
-    #         return HttpResponseRedirect('/success/')
+    fields = ['description', 'starting_price', 'category', 'active']
 
 
-    # def get(self, request, *arg, **kwargs):
-    #     form = self.form_class(request.POST)
-    #     return render(request, self.template_name)
+    def form_valid(self, form):
+        company= Company.objects.get(user=self.request.user)
+        form.instance.user = self.request.user
+        form.instance.company=company
+        return super().form_valid(form)
 
-def auction_create_success(request):
+class AuctionUpdateView(UpdateView):
+    model = Auction
+    fields = ['description', 'starting_price', 'category', 'active']
+    template_name_suffix = '_update_form'
+   
 
-    return render(request, "pages/auction_create_success.html")
+
 
 class AuctionDetailView(DetailView):
     context_object_name = 'auction'
@@ -174,6 +167,15 @@ class DatasourceView(View):
             
             return redirect(data['redirect'])
 
+        def get_context_data(self,*args, **kwargs):
+            context = super(DatasourceView, self).get_context_data(*args,**kwargs)
+    
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
+
+
 class BidCreateView(CreateView):
 
     model = Bid
@@ -182,7 +184,26 @@ class BidCreateView(CreateView):
     def get_absolute_url(self):
         return reverse('bid-detail', kwargs={'pk':self.pk})
 
+    def get_context_data(self,*args, **kwargs):
+        context = super(BidCreateView, self).get_context_data(*args,**kwargs)
+       
+
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
+
+
 
 class BidDetailView(DetailView):
     context_object_name = 'bid'
     queryset = Bid.objects.all()
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(BidDetailView, self).get_context_data(*args,**kwargs)
+       
+
+        company=Company.objects.get(user=self.request.user)
+        context['company'] = company
+        
+        return context
