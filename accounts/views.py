@@ -87,4 +87,4 @@ def connect(request):
     #     'p_form': p_form
     # }
 
-    return render(request, 'account/connect.html')
+    return render(request, 'accounts/connect.html')
