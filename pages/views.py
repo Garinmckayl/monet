@@ -1,4 +1,5 @@
 
+import re
 import requests
 from accounts.models import Company, CustomUser
 from django.contrib.auth.decorators import login_required
@@ -66,11 +67,13 @@ class AuctionCreateView(CreateView):
     fields = ['description', 'starting_price', 'category', 'active']
 
     def form_valid(self, form):
-        company = Company.objects.get(user=self.request.user)
-        form.instance.user = self.request.user
-        form.instance.company = company
-        return super().form_valid(form)
-
+        company = Company.objects.filter(user=self.request.user).first()
+        if company:
+            form.instance.user = self.request.user
+            form.instance.company = company
+            return super().form_valid(form)
+        else:
+            return redirect('company-create')
 
 class AuctionUpdateView(UpdateView):
     model = Auction
@@ -170,8 +173,7 @@ class DatasourceView(View):
             return render(request, 'pages/data-source.html', {'data_source': data_source})
 
         else:
-
-            return redirect(data['redirect'])
+            return redirect('company-create')
 
         def get_context_data(self, *args, **kwargs):
             context = super(DatasourceView, self).get_context_data(
