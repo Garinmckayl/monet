@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 import django_on_heroku
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -81,16 +80,10 @@ TEMPLATES = [
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME','auction'),
-        'USER': os.environ.get('DB_USER','mark'),
-        'PASSWORD': os.environ.get('DB_PASS','1234'),
-        'HOST': 'localhost',
-        'PORT': 5432,
-        'DISABLE_SERVER_SIDE_CURSORS': True,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -187,6 +180,5 @@ ACCOUNT_FORMS = {
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
-
 
 django_on_heroku.settings(locals())
