@@ -24,5 +24,6 @@ urlpatterns = [
     path('dashboard/company/<int:pk>/', account_views.CompanyUpdateView.as_view(), name="company-update"),
     path('dashboard/company/create/', account_views.CompanyCreateView.as_view(), name='company-create'),
     path('dashboard/connect/', account_views.connect, name="connect"),
+    path('dashboard/my-account/', account_views.AccountDetailView.as_view(), name='my-account'),
     
 ]

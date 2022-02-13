@@ -1,40 +1,16 @@
 
+from pyexpat import model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views import View
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
 
-from accounts.models import Company
+from accounts.models import Company, CustomUser
 
-from .forms import (CompanyUpdateForm, CustomUserChangeForm,
-                    CustomUserCreationForm)
+from .forms import (CompanyUpdateForm, CustomUserChangeForm)
 
-# Create your views here.
-
-
-
-@login_required
-def company(request):
-    if request.method == 'POST':
-        # u_form = CustomUserChangeForm(request.POST, instance=request.user)
-        p_form = CompanyUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.company)
-        if p_form.is_valid():
-            p_form.save()
-            messages.success(request, 'Your account has been updated!')
-            return redirect('company')
-
-
-    # u_form = CustomUserChangeForm(instance=request.user)
-    p_form = CompanyUpdateForm(instance=request.user.company)
-
-    context = {
-        'p_form': p_form
-    }
-
-    return render(request, 'account/company.html', context)
 
 class MyCompanyDetailView(View):
  
@@ -88,3 +64,11 @@ def connect(request):
     # }
 
     return render(request, 'accounts/connect.html')
+
+
+class AccountDetailView(View):
+    
+    def get(self, request, *args, **kwargs):
+        user=request.user
+       
+        return render(request, 'accounts/account_detail.html', {'custom_user':user})

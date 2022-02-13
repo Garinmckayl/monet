@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
-from accounts.views import company
+
 
 from pages.models import Auction, Bid, DataSource
 

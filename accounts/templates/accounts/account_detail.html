@@ -1,0 +1,21 @@
+
+
+{% extends "pages/dashboard.html" %} {% block content %}
+<div class="container" style="margin-left: 300px;"">
+  <h4 class="text-primary">This is Your account Details </h4>
+<!-- This is the Name of the comapny row -->
+    <div class="row">
+        <div class="col"><h5>company Name: </h5></div>
+        <div class="col">{{custom_user.get_full_name}}</div>
+    </div>
+ 
+
+    <div class="container">
+      <a href="{% url 'bid-create' %}">
+        <button>Bid</button>
+      </a>
+    </div>
+
+  </div>
+
+{% endblock content%}
