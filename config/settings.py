@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import django_on_heroku
 # GENERAL
 # ------------------------------------------------------------------------------
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -180,3 +180,5 @@ ACCOUNT_FORMS = {
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+django_on_heroku.settings(locals())
