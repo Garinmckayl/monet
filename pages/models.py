@@ -78,4 +78,4 @@ class DataSource(models.Model):
     last_sync= models.DateTimeField(null=True)
     status= models.CharField(max_length=100)
     
-    created = models.DateTimeField(default=timezone.now())
+    created = models.DateTimeField(default=timezone.now)
