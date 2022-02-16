@@ -8,3 +8,5 @@ dj_database_url
 gunicorn
 psycopg2
 pytz
+
+django-heroku
