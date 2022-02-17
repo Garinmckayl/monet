@@ -1,3 +1,4 @@
+import dj_database_url
 from pathlib import Path
 
 import django_on_heroku
@@ -13,7 +14,8 @@ SECRET_KEY = '43)%4yx)aa@a=+_c(fn&kf3g29xax+=+a&key9i=!98zyim=8j'
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "monetbanking.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0",
+                 "127.0.0.1", "monetbanking.herokuapp.com"]
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -124,7 +126,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -186,13 +187,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_FORMS = {
-'signup': 'accounts.forms.CustomUserCreationForm',
+    'signup': 'accounts.forms.CustomUserCreationForm',
 }
 
-import dj_database_url 
-prod_db  =  dj_database_url.config(conn_max_age=500)
+prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
 
 django_on_heroku.settings(locals())
-import django_heroku
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
